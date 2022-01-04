@@ -3,12 +3,14 @@
     <!-- display weather here -->
     
     <input 
-      v-model="location" 
+      v-model="zipCode" 
       type="text" 
       label="Location" 
       placeholder="Location Search"
       @input="updateZipCode">
+    <!-- buttons can be useful for testing / debugging -->
     <button @click="getWeather">Refresh Weather</button>
+    <button @click="updateZipCode">Lookup ZipCode</button>
   </div>
 </template>
 
@@ -19,20 +21,20 @@ export default {
   name: 'Start',
   data () {
     return {
-      location: ''
+      zipCode: ''
     }
   },
   computed: {
-    // map state from vuex here
+    // map state from vuex here using mapState
   },
   methods: {
     updateZipCode () {
       console.log('updateZipCode', this.zipCode)
       if (this.zipCode && this.zipCode.length === 5) {
-        this.setZipCode(this.zipCode)
+        this.lookupLocationByZip(this.zipCode)
       }
     },
-    ...mapActions(['getWeather', 'setZipCode'])
+    ...mapActions(['getWeather', 'setZipCode', 'lookupLocationByZip'])
   }
 }
 </script>

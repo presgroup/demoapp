@@ -8,7 +8,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     weather: '',
-    locationSearchString: ''
+    locationSearchString: '',
+    zipCode: ''
   },
   mutations: {
     SET_WEATHER (state, weather) {
@@ -26,14 +27,15 @@ const store = new Vuex.Store({
       commit('SET_SEARCHSTRING', locationSearchString)
       dispatch('getWeather')
     },
-    lookupLocationByZip ({ commit, dispatch }, zip) {
+    lookupLocationByZip ({ commit }, zip) {
       const apiKey = 'bqfkH2mN49AwnuBkPBkaOMblKlGk7vFAnfdg2S1pk16ZzQuMTTEhQgdKZ1ye2uWj'
       const apiUrl = `http://www.zipcodeapi.com/rest/${apiKey}/info.json/${zip}/degrees`
       axios.get(apiUrl)
       .then(response => {
         console.log(response.data)
-        // if the response is successful, update the location
-
+        // if the response is successful, update the location search string
+        // then trigger the getWeather action
+        commit('TODO_CREATE_MUTATION', null)
       })
     },
     getWeather ({ commit, state }) {
