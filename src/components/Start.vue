@@ -4,7 +4,8 @@
     <!-- This worked the before I added Getters:
   <div>{{ $store.state.weather }}</div> -->
     <!-- Now I'm trying my displayWeatherDiv with Getters: -->
-    <div>{{ this.weather }}</div>
+    <div>{{ userName }}</div>
+    <div>Description: {{ weatherDescription }}</div>
 
     <input
       v-model="zipCode"
@@ -21,7 +22,8 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Start',
@@ -30,15 +32,17 @@ export default {
       zipCode: '',
     };
   },
-  computed: mapGetters(['weather']),
+  computed: mapState({
+    userName: (state) => state.name,
+    weatherDescription: (state) => state.weather[0].description,
+    weatherIcon: (state) => state.weather[0].icon,
+    weatherId: (state) => state.weather[0].id,
+    weatherMain: (state) => state.weather[0].main,
+  }),
   // computed: {
   //   // map state from vuex here using mapState
-  //   // ...mapGetters([weather]),
 
-  //   // mapGetters([weather]),
-  //   // created() {
-  //   //   this.fetchWeather()
-  //   // }
+  //   // 1st Attempt to copy video for mapState
   // },
   methods: {
     updateZipCode() {

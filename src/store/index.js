@@ -7,9 +7,10 @@ Vue.use(Vuex)
 // Create a new store
 const store = new Vuex.Store({
   state: {
-    weather: '',
+    weather: [{}],
     locationSearchString: '',
-    zipCode: ''
+    zipCode: '',
+    name: 'garrett'
   },
   mutations: {
     SET_WEATHER(state, weather) {
@@ -51,16 +52,13 @@ const store = new Vuex.Store({
           // if the response is successful, update the weather
 
           commit('SET_WEATHER', response.data.weather)
-          // console.log(state.weather[0]);
-          // console.log(state.weather[0].description);
+          console.log(state.weather[0])
+          console.log(state.weather[0].description)
+          console.log(state.weather)
+          console.log(typeof state.weather)
         });
     }
   },
-  getters: {
-    weather: state => {
-       state.weather
-    }
-  }
 });
 
 export default store
