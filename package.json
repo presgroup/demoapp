@@ -1,4 +1,7 @@
 {
+  "prettier": {
+    "singleQuote": true
+  },
   "name": "demoapp",
   "version": "1.0.0",
   "description": "A Vue.js project",
@@ -62,7 +65,7 @@
     "vuex": "^3.6.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-server": "^2.9.1",
+    "webpack-dev-server": "^2.11.5",
     "webpack-merge": "^4.1.0"
   },
   "engines": {

@@ -1,13 +1,18 @@
 <template>
   <div class="weather">
     <!-- display weather here -->
-    
-    <input 
-      v-model="zipCode" 
-      type="text" 
-      label="Location" 
+    <!-- This worked the before I added Getters:
+  <div>{{ $store.state.weather }}</div> -->
+    <!-- Now I'm trying my displayWeatherDiv with Getters: -->
+    <div>{{ this.weather }}</div>
+
+    <input
+      v-model="zipCode"
+      type="text"
+      label="Location"
       placeholder="Location Search"
-      @input="updateZipCode">
+      @input="updateZipCode"
+    />
     <!-- buttons can be useful for testing / debugging -->
     <button @click="getWeather">Refresh Weather</button>
     <button @click="updateZipCode">Lookup ZipCode</button>
@@ -15,33 +20,42 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Start',
-  data () {
+  data() {
     return {
-      zipCode: ''
-    }
+      zipCode: '',
+    };
   },
-  computed: {
-    // map state from vuex here using mapState
-  },
+  computed: mapGetters(['weather']),
+  // computed: {
+  //   // map state from vuex here using mapState
+  //   // ...mapGetters([weather]),
+
+  //   // mapGetters([weather]),
+  //   // created() {
+  //   //   this.fetchWeather()
+  //   // }
+  // },
   methods: {
-    updateZipCode () {
-      console.log('updateZipCode', this.zipCode)
+    updateZipCode() {
+      console.log('updateZipCode', this.zipCode);
       if (this.zipCode && this.zipCode.length === 5) {
-        this.lookupLocationByZip(this.zipCode)
+        this.lookupLocationByZip(this.zipCode);
       }
     },
-    ...mapActions(['getWeather', 'setZipCode', 'lookupLocationByZip'])
-  }
-}
+    ...mapActions(['getWeather', 'setZipCode', 'lookupLocationByZip']),
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
