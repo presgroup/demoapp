@@ -10,7 +10,7 @@ const store = new Vuex.Store({
     weather: [{}],
     locationSearchString: '',
     zipCode: '',
-    name: 'garrett'
+    locationInfo: '',
   },
   mutations: {
     SET_WEATHER(state, weather) {
@@ -19,6 +19,13 @@ const store = new Vuex.Store({
     SET_SEARCHSTRING(state, locationSearchString) {
       state.locationSearchString = locationSearchString
       console.log('SET_SEARCHSTRING ran')
+    },
+    SET_LOCATIONINFO(state, locationInfo) {
+      state.locationInfo = locationInfo
+      console.log('SET_LOCATIONINFO ran')
+      console.log(state.locationInfo)
+      console.log(state.locationInfo.city)
+      console.log(state.locationInfo.state)
     }
   },
   actions: {
@@ -37,9 +44,11 @@ const store = new Vuex.Store({
         // if the response is successful, update the location search string
         // then trigger the getWeather action
         commit('SET_SEARCHSTRING', response.data.zip_code)
+        console.log(response.data)
+        console.log(response.data.city)
+        console.log(response.data.state)
+        commit('SET_LOCATIONINFO', response.data)
         dispatch('getWeather')
-        // Pretty sure line below was to show me what to do, and I can delte it:
-        // commit('TODO_CREATE_MUTATION', null)
       })
     },
     getWeather({ commit, state }) {
@@ -56,6 +65,7 @@ const store = new Vuex.Store({
           console.log(state.weather[0].description)
           console.log(state.weather)
           console.log(typeof state.weather)
+          console.log(response.data)
         });
     }
   },
