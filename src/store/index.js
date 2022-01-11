@@ -17,7 +17,12 @@ const store = new Vuex.Store({
     },
     SET_SEARCHSTRING (state, locationSearchString) {
       state.locationSearchString = locationSearchString
+    },
+    SET_ZIPCODE (state, userZipCode) {
+      state.zipCode = userZipCode
     }
+
+    
   },
   actions: {
     setWeather ({ commit }, weather) {
@@ -32,17 +37,18 @@ const store = new Vuex.Store({
       const apiUrl = `http://www.zipcodeapi.com/rest/${apiKey}/info.json/${zip}/degrees`
       axios.get(apiUrl)
       .then(response => {
-        console.log(response.data)
+        const zipData = response.data
+        console.log(zipData)
         // if the response is successful, update the location search string
         // then trigger the getWeather action
-        commit('TODO_CREATE_MUTATION', null)
+        commit('SET_ZIPCODE', zipData.zip_code)
       })
     },
     getWeather ({ commit, state }) {
       console.log('getWeather')
       const apiUrl = 'http://api.openweathermap.org/data/2.5/weather'
       const appId = '75105c22424878900ef3a764236b2549'
-      axios.get(`${apiUrl}?q=${state.location}&appid=${appId}`)
+      axios.get(`${apiUrl}?q=${state.zipCode}&appid=${appId}`)
       .then(response => {
         console.log(response.data)
         // if the response is successful, update the weather

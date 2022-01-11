@@ -21,7 +21,7 @@ export default {
   name: 'Start',
   data () {
     return {
-      zipCode: ''
+      zipCode: '',
     }
   },
   computed: {
@@ -34,6 +34,10 @@ export default {
         this.lookupLocationByZip(this.zipCode)
       }
     },
+    setZipCode() {
+      
+    },
+
     ...mapActions(['getWeather', 'setZipCode', 'lookupLocationByZip'])
   }
 }
