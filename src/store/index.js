@@ -9,10 +9,8 @@ const store = new Vuex.Store({
   state: {
     weather: [{}],
     locationSearchString: '',
-    // Garrett - Removing the state zipCode did nothing to the app. If I don't end up needing it, remove it before turning in.
-    zipCode: '',
     locationInfo: '',
-    weatherIcon: '',
+    weatherIcon: 'https://openweathermap.org/img/wn/02d@2x.png',
   },
   mutations: {
     SET_WEATHER(state, weather) {
@@ -20,14 +18,12 @@ const store = new Vuex.Store({
     },
     SET_SEARCHSTRING(state, locationSearchString) {
       state.locationSearchString = locationSearchString
-      console.log('SET_SEARCHSTRING ran')
     },
     SET_LOCATIONINFO(state, locationInfo) {
       state.locationInfo = locationInfo
     },
     SET_WEATHER_ICON(state, weatherIcon) {
       state.weatherIcon = weatherIcon
-      console.log('SET_WEATHER_ICON mutation fired')
     }
   },
   actions: {
@@ -53,7 +49,6 @@ const store = new Vuex.Store({
       })
     },
     getWeather({ commit, state }) {
-      console.log('getWeather fired')
       const apiUrl = 'http://api.openweathermap.org/data/2.5/weather'
       const appId = '75105c22424878900ef3a764236b2549'
       axios
@@ -62,29 +57,14 @@ const store = new Vuex.Store({
           // if the response is successful, update the weather
           if(response.status === 200) {
             commit('SET_WEATHER', response.data.weather)
-            console.log(state.weather[0].icon)
             this.dispatch('getWeatherIcon')
-            console.log(response.data)
           }
         });
     },
-    getWeatherIcon({commit, state}) {
-      const weatherIcon = fetch(`https://openweathermap.org/img/wn/${state.weather[0].icon}@2x.png`)
-      fetch(`https://openweathermap.org/img/wn/${state.weather[0].icon}@2x.png`)
-        // console.log(response)
-      // commit('SET_WEATHER_ICON', weatherIcon)
-      console.log('getWeatherIcon fired')
-      this.dispatch('getText')
-    },
-    async getText({commit, state}) {
-      console.log('getText fired.')
-      console.log(state.weatherIcon)
+    async getWeatherIcon({commit, state}) {
       const myObject = await fetch(`https://openweathermap.org/img/wn/${state.weather[0].icon}@2x.png`);
-      // let myText = await myObject.text();
-      console.log(myObject)
       commit('SET_WEATHER_ICON', myObject.url)
-      console.log(state.weatherIcon)
-    }
+    },
   },
 });
 

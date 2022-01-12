@@ -4,7 +4,7 @@
     <div>Weather for: {{ city }} {{ state }} {{ zip }}</div>
     <div>Description: {{ weatherDescription }}</div>
     <div>
-      <img v-bind:src="weatherIcon" alt="WeatherIconPic" />
+      <img :src="weatherIcon" alt="WeatherIconPic" />
     </div>
     <div>Weather Id: {{ weatherId }}</div>
     <div>Weather Main: {{ weatherMain }}</div>
@@ -36,11 +36,10 @@ export default {
   computed: mapState({
     // map state from vuex here using mapState
     weatherDescription: (state) => state.weather[0].description,
-    // weatherIcon: (state) => state.weather[0].icon,
     weatherId: (state) => state.weather[0].id,
     weatherMain: (state) => state.weather[0].main,
-    weatherIcon: (state) => state.weatherIcon,
-    zip: (state) => state.locationSearchString,
+    weatherIcon: 'weatherIcon',
+    zip: 'locationSearchString',
     city: (state) => state.locationInfo.city,
     state: (state) => state.locationInfo.state,
   }),
