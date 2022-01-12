@@ -1,7 +1,7 @@
 <template>
   <div class="weather">
     <!-- display weather here -->
-    
+    {{ weather }}
     <input 
       v-model="zipCode" 
       type="text" 
@@ -16,6 +16,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Start',
@@ -24,9 +25,11 @@ export default {
       zipCode: '',
     }
   },
-  computed: {
+  computed: mapState ({
     // map state from vuex here using mapState
-  },
+    weather: state => state.weather,
+
+  }),
   methods: {
     updateZipCode () {
       console.log('updateZipCode', this.zipCode)
@@ -34,8 +37,8 @@ export default {
         this.lookupLocationByZip(this.zipCode)
       }
     },
-    setZipCode() {
-      
+    getWeather() {
+      console.log(this.userWeather)
     },
 
     ...mapActions(['getWeather', 'setZipCode', 'lookupLocationByZip'])

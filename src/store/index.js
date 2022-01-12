@@ -50,10 +50,12 @@ const store = new Vuex.Store({
       const appId = '75105c22424878900ef3a764236b2549'
       axios.get(`${apiUrl}?q=${state.zipCode}&appid=${appId}`)
       .then(response => {
-        console.log(response.data)
+        const userWeather = response.data
+        console.log(userWeather)
         // if the response is successful, update the weather
 
-        commit('SET_WEATHER', null)
+        commit('SET_WEATHER', userWeather)
+        return userWeather;
       })
     }
   }
