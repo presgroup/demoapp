@@ -9,8 +9,10 @@ const store = new Vuex.Store({
   state: {
     weather: [{}],
     locationSearchString: '',
+    // Garrett - Removing the state zipCode did nothing to the app. If I don't end up needing it, remove it before turning in.
     zipCode: '',
     locationInfo: '',
+    weatherIcon: '',
   },
   mutations: {
     SET_WEATHER(state, weather) {
@@ -22,10 +24,10 @@ const store = new Vuex.Store({
     },
     SET_LOCATIONINFO(state, locationInfo) {
       state.locationInfo = locationInfo
-      console.log('SET_LOCATIONINFO ran')
-      console.log(state.locationInfo)
-      console.log(state.locationInfo.city)
-      console.log(state.locationInfo.state)
+    },
+    SET_WEATHER_ICON(state, weatherIcon) {
+      state.weatherIcon = weatherIcon
+      console.log('SET_WEATHER_ICON mutation fired')
     }
   },
   actions: {
@@ -42,12 +44,11 @@ const store = new Vuex.Store({
       const apiUrl = `http://www.zipcodeapi.com/rest/${apiKey}/info.json/${zip}/degrees`
       axios.get(apiUrl).then(response => {
         // if the response is successful, update the location search string
+        if(response.status === 200) {
+          commit('SET_SEARCHSTRING', response.data.zip_code)
+          commit('SET_LOCATIONINFO', response.data)
+        }
         // then trigger the getWeather action
-        commit('SET_SEARCHSTRING', response.data.zip_code)
-        console.log(response.data)
-        console.log(response.data.city)
-        console.log(response.data.state)
-        commit('SET_LOCATIONINFO', response.data)
         dispatch('getWeather')
       })
     },
@@ -59,14 +60,30 @@ const store = new Vuex.Store({
         .get(`${apiUrl}?zip=${state.locationSearchString}&appid=${appId}`)
         .then(response => {
           // if the response is successful, update the weather
-
-          commit('SET_WEATHER', response.data.weather)
-          console.log(state.weather[0])
-          console.log(state.weather[0].description)
-          console.log(state.weather)
-          console.log(typeof state.weather)
-          console.log(response.data)
+          if(response.status === 200) {
+            commit('SET_WEATHER', response.data.weather)
+            console.log(state.weather[0].icon)
+            this.dispatch('getWeatherIcon')
+            console.log(response.data)
+          }
         });
+    },
+    getWeatherIcon({commit, state}) {
+      const weatherIcon = fetch(`https://openweathermap.org/img/wn/${state.weather[0].icon}@2x.png`)
+      fetch(`https://openweathermap.org/img/wn/${state.weather[0].icon}@2x.png`)
+        // console.log(response)
+      // commit('SET_WEATHER_ICON', weatherIcon)
+      console.log('getWeatherIcon fired')
+      this.dispatch('getText')
+    },
+    async getText({commit, state}) {
+      console.log('getText fired.')
+      console.log(state.weatherIcon)
+      const myObject = await fetch(`https://openweathermap.org/img/wn/${state.weather[0].icon}@2x.png`);
+      // let myText = await myObject.text();
+      console.log(myObject)
+      commit('SET_WEATHER_ICON', myObject.url)
+      console.log(state.weatherIcon)
     }
   },
 });
