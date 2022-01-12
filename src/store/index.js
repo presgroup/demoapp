@@ -18,8 +18,9 @@ const store = new Vuex.Store({
     SET_SEARCHSTRING (state, locationSearchString) {
       state.locationSearchString = locationSearchString
     },
-    SET_ZIPCODE (state, userZipCode) {
-      state.zipCode = userZipCode
+    SET_ZIPCODE (state, zipData) {
+      state.zipCode = zipData.zip_code
+      state.locationSearchString = zipData.city
     }
 
     
@@ -39,9 +40,13 @@ const store = new Vuex.Store({
       .then(response => {
         const zipData = response.data
         console.log(zipData)
+        const { city } = zipData
+        console.log(city)
+
         // if the response is successful, update the location search string
         // then trigger the getWeather action
-        commit('SET_ZIPCODE', zipData.zip_code)
+        commit('SET_ZIPCODE', zipData)
+        
       })
     },
     getWeather ({ commit, state }) {

@@ -2,7 +2,8 @@
   <div class="weather">
     <!-- display weather here -->
     <h1>
-      The temperature is currently: {{ weather }}
+      The temperature is currently: {{ weather }}&#8457; in  {{ location }}
+     
     </h1>
     <input 
       v-model="zipCode" 
@@ -29,7 +30,8 @@ export default {
   },
   computed: mapState ({
     // map state from vuex here using mapState
-    weather: state => state.weather
+    weather: state => state.weather,
+    location: state => state.locationSearchString
 
   }),
   methods: {
@@ -39,11 +41,11 @@ export default {
         this.lookupLocationByZip(this.zipCode)
       }
     },
-    getWeather() {
-      console.log(this.userWeather)
+    setLocation () {
+
     },
 
-    ...mapActions(['getWeather', 'setZipCode', 'lookupLocationByZip'])
+    ...mapActions(['getWeather', 'setLocation', 'lookupLocationByZip'])
   }
 }
 </script>
@@ -64,4 +66,5 @@ li {
 a {
   color: #42b983;
 }
+
 </style>
