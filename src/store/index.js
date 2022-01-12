@@ -48,7 +48,7 @@ const store = new Vuex.Store({
       console.log('getWeather')
       const apiUrl = 'http://api.openweathermap.org/data/2.5/weather'
       const appId = '75105c22424878900ef3a764236b2549'
-      axios.get(`${apiUrl}?q=${state.zipCode}&appid=${appId}`)
+      axios.get(`${apiUrl}?q=${state.zipCode}&units=imperial&appid=${appId}`)
       .then(response => {
         const userWeather = response.data
         console.log(userWeather)
