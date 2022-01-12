@@ -20,7 +20,7 @@ const store = new Vuex.Store({
     },
     SET_ZIPCODE (state, zipData) {
       state.zipCode = zipData.zip_code
-      state.locationSearchString = zipData.city
+      state.locationSearchString = zipData.city + ','  + zipData.state
     }
 
     
