@@ -66,5 +66,26 @@ li {
 a {
   color: #42b983;
 }
+button {
+    display: inline-block;
+    background: #333;
+    color: white;
+    font-size: 14px;
+    border: 0;
+    padding: 1rem 1.5rem;
+    margin-top: 20px;
+    margin-left: 15px;
+    
+   
+  }
+  input {
+    padding-left: 1rem;
+    font-size: 29px;
+    text-align: center;
+    
+  }
 
+  div {
+    padding-top: 80px;
+  }
 </style>
