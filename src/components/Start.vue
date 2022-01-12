@@ -1,10 +1,6 @@
 <template>
   <div class="weather">
-    <!-- display weather here -->
-    <h1>
-      The temperature is currently: {{ weather }}&#8457; in  {{ location }}
-     
-    </h1>
+
     <input 
       v-model="zipCode" 
       type="text" 
@@ -14,6 +10,18 @@
     <!-- buttons can be useful for testing / debugging -->
     <button @click="getWeather">Refresh Weather</button>
     <button @click="updateZipCode">Lookup ZipCode</button>
+
+    <!-- display weather here -->
+
+    <h1 v-if="weather">
+      The temperature is currently: {{ weather[0] }}&#8457; in  {{ location }} 
+    </h1>
+    <ul v-if="weather">
+      <li>The real feel today is: <b>{{ weather[1] }}&#8457;</b></li>
+      <li>The high today in {{ location }} will be: <b> {{ weather[2] }}&#8457;</b> </li>
+      <li>The low today in {{ location }} will be: <b>{{ weather[3] }}&#8457;</b></li>
+    </ul>
+   
   </div>
 </template>
 
@@ -41,9 +49,7 @@ export default {
         this.lookupLocationByZip(this.zipCode)
       }
     },
-    setLocation () {
-
-    },
+    
 
     ...mapActions(['getWeather', 'setLocation', 'lookupLocationByZip'])
   }
