@@ -52,10 +52,12 @@ const store = new Vuex.Store({
       .then(response => {
         const userWeather = response.data
         console.log(userWeather)
+        const { main: {temp} } = userWeather
+        
         // if the response is successful, update the weather
 
-        commit('SET_WEATHER', userWeather)
-        return userWeather;
+        commit('SET_WEATHER', temp)
+        
       })
     }
   }

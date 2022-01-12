@@ -1,7 +1,9 @@
 <template>
   <div class="weather">
     <!-- display weather here -->
-    {{ weather }}
+    <h1>
+      The temperature is currently: {{ weather }}
+    </h1>
     <input 
       v-model="zipCode" 
       type="text" 
@@ -27,7 +29,7 @@ export default {
   },
   computed: mapState ({
     // map state from vuex here using mapState
-    weather: state => state.weather,
+    weather: state => state.weather
 
   }),
   methods: {
